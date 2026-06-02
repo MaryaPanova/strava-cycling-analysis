@@ -103,6 +103,63 @@ Unzip and place `activities.csv` in the project root, then run all cells.
 
 ---
 
+## Live API integration
+
+This project now connects directly to the Strava API —
+no more manual CSV exports.
+
+### Setup
+
+1. Create a Strava API app at https://www.strava.com/settings/api
+   (set the **Authorization Callback Domain** to `localhost`)
+2. Copy `.env.example` to `.env` and add your client ID + secret
+3. Run `python auth.py` to complete OAuth (opens browser)
+4. Your token is stored locally in `strava_tokens.json` and refreshes automatically
+
+### Upload a workout
+
+```bash
+python upload.py --type ride --distance 45.2 --time "1:30:00" --name "Evening loop"
+```
+
+Manual indoor session:
+
+```bash
+python upload.py --type gym --time 3600 --name "Strength" --trainer
+```
+
+### Sync recent activities
+
+```bash
+python sync.py            # pulls everything new since the last sync
+python sync.py --days 30  # or a fixed window
+python sync.py --dry-run  # preview without writing
+```
+
+New rides are normalized into the same columns the notebook uses and
+appended to `activities.csv`, deduped by Activity ID — just re-run the
+notebook afterwards.
+
+### Upload a GPX/TCX/FIT file
+
+```bash
+python upload.py --file morning_ride.gpx
+```
+
+### Files
+
+| File | Purpose |
+|---|---|
+| `strava_client.py` | OAuth2 flow, token refresh, rate-limited API wrapper |
+| `auth.py` | One-time browser OAuth setup |
+| `upload.py` | CLI: manual activity entry or GPX/TCX/FIT upload |
+| `sync.py` | Pulls new activities and merges them into `activities.csv` |
+
+> **Rate limits:** the client reads Strava's rate-limit headers and
+> automatically pauses near the 100-requests / 15-minutes (1,000 / day) caps.
+
+---
+
 ## Stack
 
-Python 3.12 · pandas · matplotlib · seaborn · numpy · Jupyter
+Python 3.12 · pandas · matplotlib · seaborn · numpy · Jupyter · requests (Strava API)

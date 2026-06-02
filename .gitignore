@@ -1,1 +1,12 @@
 /.claude
+
+# Secrets & tokens — never commit
+.env
+strava_tokens.json
+.strava_sync_state.json
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

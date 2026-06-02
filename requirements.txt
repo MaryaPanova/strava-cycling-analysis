@@ -1,0 +1,11 @@
+# Analysis
+pandas
+numpy
+matplotlib
+seaborn
+jupyter
+plotly
+ipykernel
+
+# Strava API integration
+requests
