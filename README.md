@@ -107,6 +107,14 @@ Unzip and place `activities.csv` in the project root, then run all cells.
 
 This project now connects directly to the Strava API —
 no more manual CSV exports.
+ ⚠️  **Note:** As of 2025, Strava's API requires a
+  paid Strava subscription
+  > to create an API application. Without it, use the
+  free CSV archive export
+  > (see Setup above) — the analysis works
+  identically either way. The API
+  > integration below is ready to use the moment
+  Strava credentials are available.
 
 ### Setup
 
